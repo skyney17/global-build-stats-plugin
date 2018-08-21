@@ -5,6 +5,7 @@ import hudson.Plugin;
 import hudson.model.ManagementLink;
 import hudson.model.TaskListener;
 import hudson.model.AbstractBuild;
+import hudson.model.WorkflowRun;
 import hudson.model.Api;
 import hudson.model.Hudson;
 import hudson.model.listeners.ItemListener;
@@ -137,7 +138,7 @@ public class GlobalBuildStatsPlugin extends Plugin {
     		if(buildStatConfigId != null){
     	    	BuildStatConfiguration config = GlobalBuildStatsPlugin.getPluginBusiness().searchBuildStatConfigById(buildStatConfigId);
     	    	if(config != null){
-    	    		List<AbstractBuildStatChartDimension> dimensions = GlobalBuildStatsPlugin.getPluginBusiness().createDataSetBuilder(config);
+    	    		List<WorkflowRunStatChartDimension> dimensions = GlobalBuildStatsPlugin.getPluginBusiness().createDataSetBuilder(config);
     	    		rsp.serveExposedBean(req, new BuildStatChartData(dimensions), flavor);
     	    		chartDataHasBeenExposed = true;
     	    	}
@@ -194,20 +195,20 @@ public class GlobalBuildStatsPlugin extends Plugin {
      * persisted data
      */
     @Extension
-    public static class GlobalBuildStatsRunListener extends RunListener<AbstractBuild>{
+    public static class GlobalBuildStatsRunListener extends RunListener<WorkflowRun>{
     	public GlobalBuildStatsRunListener() {
-    		super(AbstractBuild.class);
+    		super(WorkflowRun.class);
 		}
     	
     	@Override
-    	public void onCompleted(AbstractBuild r, TaskListener listener) {
+    	public void onCompleted(WorkflowRun r, TaskListener listener) {
     		super.onCompleted(r, listener);
     		
     		getPluginBusiness().onJobCompleted(r);
     	}
 
         @Override
-        public void onDeleted(AbstractBuild build) {
+        public void onDeleted(WorkflowRun build) {
             super.onDeleted(build);
 
             getPluginBusiness().onBuildDeleted(build);

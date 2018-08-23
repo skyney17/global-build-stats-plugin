@@ -2,7 +2,8 @@
 @Library('pipeline-library')_
 
 pipeline {
-    agent none
+     agent { label 'dockerserver' }
+    stages {
     stage ('Example') {
         steps {
              script { 
@@ -10,4 +11,5 @@ pipeline {
              }
         }
     }
+}
 }

@@ -2,7 +2,7 @@
 @Library('pipeline-library')_
 
 pipeline {
-     agent { label 'dockerserver' }
+     agent { label 'linux' }
     stages {
     stage ('Example') {
         steps {

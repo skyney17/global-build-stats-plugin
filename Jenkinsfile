@@ -4,10 +4,11 @@
 
 pipeline {
     // agent { label 'linux' }
-     sleep 200
+     
     stages {
     stage ('Example') {
         steps {
+            sleep 200
              script { 
                  buildPlugin()
              }

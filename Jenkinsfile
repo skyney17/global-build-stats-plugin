@@ -8,8 +8,7 @@ pipeline {
     stages {
     stage ('Example') {
         steps {
-            sh 'sleep 200'
-             script { 
+            script { 
                  buildPlugin()
              }
         }
